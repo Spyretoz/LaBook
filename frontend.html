@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="LaBook.css">
+	<title>LaBook</title>
+	<link rel="shortcut icon" href="http://icons.iconarchive.com/icons/ampeross/smooth/512/Apple-Books-Border-icon.png">
+	<link rel="apple-touch-icon" href="http://icons.iconarchive.com/icons/ampeross/smooth/512/Apple-Books-Border-icon.png">
+	<link rel="icon" href="http://icons.iconarchive.com/icons/ampeross/smooth/512/Apple-Books-Border-icon.png">
+</head>
+<body>
+
+	<div class="welcome">
+		<h1>LaBook</h1>
+		<h3>The book searching machine</h3>
+	</div>
+
+	
+		<div class="searchbox">
+			<input type="text" autocomplete="off" class="searchtxt" id="searchtxt" placeholder="Enter book's title">
+			<button class="searchbut" id="searchbut" onclick="starting()">Search</button>
+		</div>
+
+
+	<center>
+ 	<br> <br>
+	<div class="res" id="res">
+		<table id="table">
+			<tr>
+				<th><h3>Title</h3></th>
+				<th><h3>Author</h3></th>
+				<th><h3>Genre</h3></th>
+				<th><h3>Price</h3></th>
+			</tr>
+
+			<!--<tr>
+				<td id="restitle"></td>
+				<td id="resauthor"></td>
+				<td id="resgenre"></td>
+				<td id="resprice"></td>
+			</tr>-->
+		</table>
+	</div>
+
+	<br> <br>
+
+	<div class="tit">
+		<h2>Let's ADD a new book!</h2>
+	</div>
+	
+
+	<p></p>
+
+	<div class="new">
+		<table class="tablo">
+			<tr>
+				<th><h3>Title</h3></th>
+				<th><h3>Author</h3></th>
+				<th><h3>Genre</h3></th>
+				<th><h3>Price</h3></th>
+			</tr>
+
+			<tr>
+				<td><input type="text" id="title" autocomplete="off"></td>
+				<td><input type="text" id="author" autocomplete="off"></td>
+				<td>
+					<select id="genre">
+						<option value="Science fiction" id="sciencefiction">Science fiction
+						<option value="Satire" id="satire">Satire
+						<option value="Drama" id="drama">Drama
+						<option value="Action and Adventure" id="ANA">Action and Adventure
+						<option value="Romance" id="romance">Romance
+						<option value="Mystery" id="mystery">Mystery
+						<option value="Horror" id="horror">Horror
+					</select>
+				</td>
+				<td><input type="text" id="price" autocomplete="off"></td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="add_data">
+		<button class="btn" id="btn" onclick="begin()">ADD</button>
+	</div>
+
+  
+
+	<script type="text/javascript">
+		const seabar = document.getElementById("searchtxt");
+		const table = document.getElementById("table");
+		const title = document.getElementById("title");
+		const author = document.getElementById("author");
+		const genre = document.getElementById("genre");
+		const price = document.getElementById("price");
+
+		function starting()
+		{
+			if (seabar.value == "") 
+			{
+				alert("You need to write book's title");
+			}
+			else
+			{
+				poping();
+			}
+		}
+
+		function poping()
+		{
+			var x = seabar.value;
+			var Url = "ip_address:8081/books/" + x;
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", Url, true);
+			xhr.send();
+			xhr.onreadystatechange = processRequest;
+
+			function processRequest(e) 
+			{
+				if (xhr.readyState == 4 && xhr.status == 200) 
+				{
+					var response1 = JSON.parse(xhr.responseText);
+
+					if (response1 == "")
+					{
+						alert("No result found matching");
+					}
+					else
+					{
+						for(var i = 0; i < response1.length; i++)
+        				{
+          					var row = table.insertRow(1);
+          					row.insertCell(0).innerHTML = response1[i].title;
+		  					row.insertCell(1).innerHTML = response1[i].author;
+		  					row.insertCell(2).innerHTML = response1[i].genre;
+		  					row.insertCell(3).innerHTML = response1[i].price;
+        				}
+						alert(response1.length + " result(s) matching");
+                       	// document.getElementById("restitle").innerHTML = response1[0].title;
+						// document.getElementById("resauthor").innerHTML = response1[0].author;
+						// document.getElementById("resgenre").innerHTML = response1[0].genre;
+						// document.getElementById("resprice").innerHTML = response1[0].price;
+						table.style.display = "block";
+					}
+		 		}
+			}
+		}
+
+
+		function begin()
+		{
+			if (title.value == "" || author.value == "" || price.value == "") 
+			{
+				alert("Field(s) missing!");
+			}
+			else if(isNaN(price.value) || price.value <= 0)
+			{
+				alert("Price must be postive number");
+			}
+			else
+			{
+				add();
+			}	
+		}
+
+		function add()
+		{
+			var xhr = new XMLHttpRequest();
+			var Url = "ip_address:8081/books/";
+			xhr.open("POST", Url, true);
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.onreadystatechange = function () 
+			{
+    			if (xhr.readyState === 4 && xhr.status === 200) 
+    			{
+					var respo = JSON.parse(xhr.responseText);
+        			console.log(respo.author + ", " + respo.title+ ", " + respo.genre+ ", " + respo.price);
+        			alert("Book added!");
+    			}
+			}
+				
+			var myrespo = JSON.stringify({"author":author.value, "title":title.value, "genre":genre.value, "price":price.value});
+			xhr.send(myrespo);
+		}
+	</script>
+</body>
+</html>

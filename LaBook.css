@@ -1,0 +1,152 @@
+body
+{
+	background-color: #d9d9d9; /* make backgroung grey */
+	font-family: "Bookman Old Style", serif; /* text style */
+}
+
+.welcome
+{
+	text-align: center;
+}
+
+.searchbox
+{
+	text-align: center;
+}
+
+.searchtxt
+{
+	width: 40%;
+	height: 50px;
+	font-size: 16px;
+	border: 2px solid #aaa;
+	border-radius: 4px;
+	outline: none;
+	padding: 8px;
+	box-sizing: border-box;
+	transition: .3s;
+}
+
+input[type=text]:focus
+{
+	border-color: #ffc107;
+	box-shadow: 0 0 8px 0 #ffc107;
+}
+
+.searchbut
+{
+	left: -2px;
+	font-size: 16px;
+	position: relative;
+	width: 150px;
+	height: 50px;
+	border: none;
+	border-radius: 4px;
+	outline: none;
+	cursor: pointer;
+	background: #ffc107;
+	color: #fff;
+}
+
+
+.Add
+{
+	text-align: center;
+	bottom: 50px;
+}
+
+.btn
+{
+	background: #ffc107;
+	padding: 10px 20px;
+	font-size: 30px;
+	cursor: pointer;
+	margin: 10px;
+	transition: 0.3s;
+	position: relative;
+	overflow: hidden;
+}
+
+.btn0:hover
+{
+  color: #fff;
+}
+
+.btn::before
+{
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: #ffc107;
+  z-index: -1;
+  transition: 0.8s;
+}
+
+.btn0::before
+{
+  top: 0;
+  border-radius: 0 0 50% 50%;
+}
+
+.btn0:hover::before
+{
+  height: 180%;
+}
+
+
+table
+{
+	display: none;
+	border-collapse: collapse;
+}
+
+table th
+{
+	text-align: center;
+	background-color: #c19717;
+	color: #fff;
+	padding: 10px 50px 20px 10px;
+}
+
+table td 
+{
+	text-align: center;
+	border: 2px solid orange;
+	padding: 4px 8px;
+}
+
+.tit
+{
+	text-align: center;
+}
+
+.tablo
+{
+	display: block;
+	margin: auto;
+	border-collapse: collapse;
+}
+
+.add_data
+{
+	text-align: center;
+	
+}
+
+.btn
+{
+	margin-left: 50px; 
+	padding: 20px;
+	font-size: 20px;
+	font-family: "verdana";
+	cursor: pointer;
+	margin: 10px;
+	transition: 0.5s;
+}
+
+.btn:hover
+{
+	color: #c19717;
+}
